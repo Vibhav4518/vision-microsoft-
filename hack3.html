@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Constitution Quiz Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes coinFlip {
+            0% { transform: rotateY(0); }
+            50% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        .slide-up {
+            animation: slideUp 0.7s ease-out;
+        }
+        .flip-coin {
+            animation: coinFlip 1s ease-out;
+        }
+        .pulse {
+            animation: pulse 0.5s ease-in-out infinite;
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .question-card {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+        }
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+        .correct-answer {
+            background-color: #22c55e;
+            color: white;
+        }
+        .wrong-answer {
+            background-color: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header Section -->
+        <header class="text-center mb-12 slide-up">
+            <div class="flex justify-center mb-6">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/48c129d7-87ce-407c-9f4c-14901ddc1002.png" alt="Indian Constitution logo with Ashoka Chakra and book motif" class="rounded-full border-4 border-blue-600 w-24 h-24">
+            </div>
+            <h1 class="text-4xl font-bold text-blue-800 mb-4">Indian Constitution Quiz</h1>
+            <p class="text-xl text-gray-700">Test your knowledge of India's founding document and earn coins!</p>
+        </header>
+
+        <!-- Game Stats -->
+        <div class="flex justify-between items-center mb-8 px-4 py-3 bg-white rounded-lg shadow-sm fade-in">
+            <div class="flex items-center space-x-2">
+                <span class="font-medium text-gray-700">Question:</span>
+                <span id="current-question" class="font-bold text-blue-600">1</span>
+                <span class="font-medium text-gray-700">/</span>
+                <span id="total-questions" class="font-medium text-gray-700">100</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="font-medium text-gray-700">Score:</span>
+                <div class="flex items-center">
+                    <span id="score" class="font-bold text-yellow-600">0</span>
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/244916fc-a290-40cc-83f7-a06931fc3450.png" alt="gold coin icon" class="ml-1 flip-coin w-5 h-5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-8 h-2 bg-gray-200 rounded-full overflow-hidden fade-in">
+            <div id="progress" class="progress-bar bg-blue-600" style="width: 1%"></div>
+        </div>
+
+        <!-- Question Card -->
+        <div id="question-container" class="question-card bg-white rounded-xl p-6 mb-8 shadow-lg fade-in">
+            <h2 id="question" class="text-2xl font-semibold mb-6 text-gray-800">Loading question...</h2>
+            
+            <div id="options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Options will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedback" class="hidden p-4 mb-8 rounded-lg fade-in"></div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between mt-6">
+            <button id="next-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition transform hover:scale-105 hidden">
+                Next Question
+            </button>
+            <button id="restart-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg transition transform hover:scale-105 hidden">
+                Restart Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data - 100 questions about Indian Constitution
+        const quizQuestions = [
+            {
+                question: "Who is known as the father of the Indian Constitution?",
+                options: [
+                    "Mahatma Gandhi",
+                    "Jawaharlal Nehru",
+                    "B.R. Ambedkar",
+                    "Sardar Patel"
+                ],
+                correctAnswer: 2,
+                coinReward: 5
+            },
+            {
+                question: "When was the Indian Constitution adopted by the Constituent Assembly?",
+                options: [
+                    "15 August 1947",
+                    "26 January 1950",
+                    "26 November 1949",
+                    "2 October 1949"
+                ],
+                correctAnswer: 2,
+                coinReward: 5
+            },
+            {
+                question: "How many articles are there in the original Indian Constitution?",
+                options: [
+                    "395",
+                    "448",
+                    "520",
+                    "365"
+                ],
+                correctAnswer: 0,
+                coinReward: 7
+            },
+            {
+                question: "Which part of the Indian Constitution deals with Fundamental Rights?",
+                options: [
+                    "Part I",
+                    "Part III",
+                    "Part IV",
+                    "Part VI"
+                ],
+                correctAnswer: 1,
+                coinReward: 5
+            },
+            {
+                question: "The concept of Fundamental Duties was borrowed from which country's constitution?",
+                options: [
+                    "USA",
+                    "UK",
+                    "USSR (Russia)",
+                    "Canada"
+                ],
+                correctAnswer: 2,
+                coinReward: 6
+            },
+            {
+                question: "Which article of the Indian Constitution abolishes untouchability?",
+                options: [
+                    "Article 14",
+                    "Article 15",
+                    "Article 16",
+                    "Article 17"
+                ],
+                correctAnswer: 3,
+                coinReward: 5
+            },
+            {
+                question: "The President of India is elected by:",
+                options: [
+                    "Direct election by the people",
+                    "Prime Minister and Council of Ministers",
+                    "Electoral College consisting of elected members of both Houses of Parliament and State Legislative Assemblies",
+                    "Governors of all states"
+                ],
+                correctAnswer: 2,
+                coinReward: 7
+            },
+            {
+                question: "Which schedule of the Indian Constitution lists the states and union territories?",
+                options: [
+                    "First Schedule",
+                    "Second Schedule",
+                    "Third Schedule",
+                    "Fourth Schedule"
+                ],
+                correctAnswer: 0,
+                coinReward: 6
+            },
+            {
+                question: "The directive principles of state policy are contained in:",
+                options: [
+                    "Part III",
+                    "Part IV",
+                    "Part V",
+                    "Part VI"
+                ],
+                correctAnswer: 1,
+                coinReward: 5
+            },
+            {
+                question: "Which article provides for the establishment of a National Commission for Scheduled Castes?",
+                options: [
+                    "Article 338",
+                    "Article 356",
+                    "Article 360",
+                    "Article 370"
+                ],
+                correctAnswer: 0,
+                coinReward: 6
+            },
+            {
+                question: "Which article deals with the right to equality?",
+                options: [
+                    "Article 14",
+                    "Article 19",
+                    "Article 21",
+                    "Article 32"
+                ],
+                correctAnswer: 0,
+                coinReward: 7
+            },
+            {
+                question: "What is the minimum age for becoming Prime Minister of India?",
+                options: [
+                    "21 years",
+                    "25 years",
+                    "30 years",
+                    "No age limit"
+                ],
+                correctAnswer: 1,
+                coinReward: 6
+            },
+            {
+                question: "Which article deals with the impeachment of the President?",
+                options: [
+                    "Article 61",
+                    "Article 75",
+                    "Article 124",
+                    "Article 368"
+                ],
+                correctAnswer: 0,
+                coinReward: 8
+            },
+            {
+                question: "How many fundamental rights are there in the Indian Constitution?",
+                options: [
+                    "5",
+                    "6",
+                    "7",
+                    "8"
+                ],
+                correctAnswer: 1,
+                coinReward: 5
+            },
+            {
+                question: "Which amendment inserted the Fundamental Duties in the Indian Constitution?",
+                options: [
+                    "42nd Amendment",
+                    "44th Amendment", 
+                    "52nd Amendment",
+                    "61st Amendment"
+                ],
+                correctAnswer: 0,
+                coinReward: 7
+            },
+            {
+                question: "Which article deals with protection against arrest and detention?",
+                options: [
+                    "Article 21",
+                    "Article 22",
+                    "Article 32",
+                    "Article 226"
+                ],
+                correctAnswer: 1,
+                coinReward: 6
+            },
+            {
+                question: "Which article provides for free and compulsory education for children aged 6-14 years?",
+                options: [
+                    "Article 21A",
+                    "Article 45",
+                    "Article 51A",
+                    "Article 243G"
+                ],
+                correctAnswer: 0,
+                coinReward: 5
+            },
+            {
+                question: "The idea of Single Citizenship in India is borrowed from which country?",
+                options: [
+                    "USA",
+                    "UK",
+                    "Canada",
+                    "Australia"
+                ],
+                correctAnswer: 1,
+                coinReward: 6
+            },
+            {
+                question: "Which article provides for the establishment of the Supreme Court?",
+                options: [
+                    "Article 124",
+                    "Article 143",
+                    "Article 226",
+                    "Article 32"
+                ],
+                correctAnswer: 0,
+                coinReward: 7
+            },
+            {
+                question: "The Constitution Day of India is celebrated on:",
+                options: [
+                    "January 26",
+                    "November 26",  
+                    "August 15",
+                    "October 2"
+                ],
+                correctAnswer: 1,
+                coinReward: 5
+            }, 
+            {
+                question: "Which schedule contains the languages recognized by the Constitution?",
+                options: [
+                    "5th Schedule",
+                    "6th Schedule",
+                    "7th Schedule",
+                    "8th Schedule"
+                ],
+                correctAnswer: 3,
+                coinReward: 6
+            },
+            {
+                question: "Which state has a special provision under Article 371A?",
+                options: [
+                    "Jammu and Kashmir",
+                    "Nagaland",
+                    "Mizoram",
+                    "Sikkim"
+                ],
+                correctAnswer: 1,
+                coinReward: 7
+            },
+            {
+                question: "Which article provides for the establishment of Finance Commission?",
+                options: [
+                    "Article 280",
+                    "Article 324",
+                    "Article 368",
+                    "Article 356"
+                ], 
+                correctAnswer: 0,
+                coinReward: 6
+            },
+            {
+                question: "The concept of judicial review is borrowed from which country?",
+                options: [
+                    "UK",
+                    "USA",
+                    "France",
+                    "Canada"
+                ],
+                correctAnswer: 1,
+                coinReward: 7
+            },
+                {
+                question: "How many times has the Indian Constitution been amended as of 2023?",
+                options: [
+                    "86",
+                    "97",
+                    "105",
+                    "112"
+                ],
+                correctAnswer: 2,
+                coinReward: 8
+            }
+            // Note: In a complete implementation, there would be 100 questions
+        ];
+
+        // Game state variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let coinsEarned = 0;
+
+        // DOM elements
+        const questionContainer = document.getElementById('question-container');
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const nextButton = document.getElementById('next-btn');
+        const restartButton = document.getElementById('restart-btn');
+        const progressBar = document.getElementById('progress');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const scoreElement = document.getElementById('score');
+
+        // Initialize quiz
+        function initQuiz() {
+            totalQuestionsElement.textContent = quizQuestions.length;
+            loadQuestion();
+        }
+
+        // Load question
+        function loadQuestion() {
+            resetState();
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            currentQuestionElement.textContent = currentQuestionIndex + 1;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%`;
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-btn', 'bg-gray-100', 'hover:bg-gray-200', 'py-3', 'rounded-lg', 'text-gray-800', 'font-medium', 'transition', 'duration-200');
+                button.dataset.index = index;
+                button.addEventListener('click', selectAnswer);
+                optionsContainer.appendChild(button);
+            });
+
+            questionContainer.classList.add('slide-up');
+        }
+
+        // Reset state between questions
+        function resetState() {
+            answered = false;
+            feedbackElement.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            restartButton.classList.add('hidden');
+            questionContainer.classList.remove('slide-up');
+            optionsContainer.innerHTML = '';
+        }
+
+        // Handle answer selection
+        function selectAnswer(e) {
+            if (answered) return;
+            
+            answered = true;
+            const selectedButton = e.target;
+            const selectedIndex = parseInt(selectedButton.dataset.index);
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            
+            // Check correctness
+            if (selectedIndex === currentQuestion.correctAnswer) {
+                selectedButton.classList.add('correct-answer');
+                coinsEarned += currentQuestion.coinReward;
+                score++;
+                scoreElement.textContent = coinsEarned;
+                
+                // Show feedback
+                feedbackElement.textContent = `Correct! You earned ${currentQuestion.coinReward} coins! 🎉`;
+                feedbackElement.className = 'bg-green-100 text-green-800';
+                feedbackElement.classList.remove('hidden');
+                
+                // Coin animation
+                const coins = document.createElement('div');
+                coins.innerHTML = '💰'.repeat(currentQuestion.coinReward);
+                coins.className = 'text-2xl text-center mt-2 flip-coin';
+                feedbackElement.appendChild(coins);
+            } else {
+                selectedButton.classList.add('wrong-answer');
+                const correctButton = optionsContainer.children[currentQuestion.correctAnswer];
+                correctButton.classList.add('correct-answer');
+                
+                // Show feedback
+                feedbackElement.textContent = `Oops! The correct answer is: ${currentQuestion.options[currentQuestion.correctAnswer]}`;
+                feedbackElement.className = 'bg-red-100 text-red-800';
+                feedbackElement.classList.remove('hidden');
+            }
+            
+            nextButton.classList.remove('hidden');
+        }
+
+        // Show results
+        function showResults() {
+            questionElement.textContent = '';
+            optionsContainer.innerHTML = '';
+
+            const completionPercentage = Math.round((score / quizQuestions.length) * 100);
+            
+            feedbackElement.innerHTML = `
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-4">Quiz Completed!</h3>
+                    <p class="text-xl mb-2">Your score: ${score}/${quizQuestions.length}</p>
+                    <div class="flex justify-center items-center mb-4">
+                        <span class="text-3xl font-bold text-yellow-600 mr-2">${coinsEarned}</span>
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2ee2d898-8b63-465d-b13b-fbc550a90b91.png" alt="gold coins" class="flip-coin w-6 h-6">
+                    </div>
+                    <p class="text-lg">Congratulations! You've earned ${coinsEarned} coins!</p>
+                    <div class="mt-6 mb-4 h-4 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-600 rounded-full" style="width: ${completionPercentage}%"></div>
+                    </div>
+                </div>
+            `;
+            feedbackElement.className = 'bg-blue-100 text-blue-800 p-6 rounded-lg text-center';
+            feedbackElement.classList.remove('hidden');
+            
+            restartButton.classList.remove('hidden');
+            nextButton.classList.add('hidden');
+            restartButton.focus();
+        }
+
+        // Event listeners
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        restartButton.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            coinsEarned = 0;
+            scoreElement.textContent = '0';
+            loadQuestion();
+        });
+
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voucher Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .voucher-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .voucher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .voucher-logo {
+            transition: transform 0.3s ease;
+            height: 30px;
+            object-fit: contain;
+        }
+        
+        .voucher-card:hover .voucher-logo {
+            transform: scale(1.05);
+        }
+        
+        .coin-animation {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.02);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .claimed {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .claimed::after {
+            content: "✓ CLAIMED";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(79, 70, 229, 0.9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease-out;
+            z-index: 10;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .coin-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        
+        .category-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-6 sm:py-8">
+        <!-- Header Section -->
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-indigo-700">Voucher Marketplace</h1>
+                <p class="text-gray-600 text-sm sm:text-base">Redeem your vouchers using coins</p>
+            </div>
+            <div class="flex items-center bg-indigo-100 rounded-full px-4 sm:px-6 py-1.5 sm:py-2">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/34d09b64-1f3a-45db-ad39-02bae827549b.png" alt="Coin icon" class="w-6 h-6 sm:w-8 sm:h-8 mr-2 coin-animation">
+                <span id="coin-balance" class="font-bold text-indigo-700 text-base sm:text-lg">1,250</span>
+            </div>
+        </header>
+        
+        <!-- Progress Bar -->
+        <div class="mb-6 sm:mb-8">
+            <div class="flex justify-between mb-2">
+                <span class="text-sm font-medium text-gray-600">Your Progress</span>
+                <span class="text-sm font-bold text-indigo-700">Silver Tier</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%"></div>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Collect 200 more coins to reach Gold Tier</p>
+        </div>
+        
+        <!-- Categories -->
+        <div class="mb-6 sm:mb-8">
+            <h2 class="text-lg sm:text-xl font-semibold mb-3">Categories</h2>
+            <div class="flex overflow-x-auto pb-2 gap-2" id="category-container">
+                <button class="category-btn active px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base bg-indigo-100 text-indigo-700 rounded-full whitespace-nowrap" data-category="all">All</button>
+                <button class="category-btn px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base bg-white text-gray-700 rounded-full whitespace-nowrap" data-category="food">Food</button>
+                <button class="category-btn px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base bg-white text-gray-700 rounded-full whitespace-nowrap" data-category="ride">Ride</button>
+                <button class="category-btn px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base bg-white text-gray-700 rounded-full whitespace-nowrap" data-category="shopping">Shopping</button>
+                <button class="category-btn px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base bg-white text-gray-700 rounded-full whitespace-nowrap" data-category="entertainment">Entertainment</button>
+            </div>
+        </div>
+        
+        <!-- Featured Voucher -->
+        <div class="mb-6 sm:mb-8">
+            <h2 class="text-lg sm:text-xl font-semibold mb-3">Featured Voucher</h2>
+            <div class="featured-voucher bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-5 text-white relative overflow-hidden pulse">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-white opacity-10 rounded-full -mr-6 -mt-6"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -ml-10 -mb-10"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex flex-col sm:flex-row justify-between items-start mb-3 gap-3">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3918fdc0-83db-4b2e-aaaf-5d761d10dae9.png" alt="Zomato Pro logo in white on red background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-lg">₹150 Off + Free Delivery</h3>
+                            <p class="font-medium">On orders above ₹300</p>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-full px-4 py-2">
+                            <div class="flex items-center">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0b753c08-908a-4e7f-a2dd-efc07c7ea114.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="font-bold text-sm sm:text-base">600 Coins</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-4 text-sm sm:text-base">Exclusive Pro member offer. Valid till 30 June 2024</p>
+                    <button class="claim-btn bg-white text-indigo-700 px-5 py-1.5 rounded-full font-medium hover:bg-opacity-90 transition text-sm sm:text-base">Claim Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- All Vouchers -->
+        <div class="mb-6 sm:mb-8">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-lg sm:text-xl font-semibold">Available Vouchers</h2>
+                <button class="text-indigo-700 font-medium text-sm sm:text-base">See All</button>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="voucher-container">
+                <!-- Voucher 1 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="food" data-price="300">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9fd146fa-952c-4b06-8d8d-936be16d2ca2.png" alt="Swiggy logo in white text on orange background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">₹100 Off + Free Delivery</h3>
+                            <p class="text-sm text-gray-600">On first Swiggy order</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6e4fc289-0dab-44ba-9138-fcbdbddb87b1.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">300</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 15 May 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 65%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">65% claimed</div>
+                    </div>
+                </div>
+                
+                <!-- Voucher 2 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="ride" data-price="250">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8cf984d4-652e-4bc4-97cc-0afaff90c6a8.png" alt="Uber logo in white text on black background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">₹75 Off First Ride</h3>
+                            <p class="text-sm text-gray-600">On UberX or UberGo</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c5369343-2d7b-4869-afcc-85406172564c.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">250</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 30 Apr 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 40%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">40% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 3 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="shopping" data-price="500">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e9544ae6-b06b-4f1e-ba00-4d189268f6f6.png" alt="Flipkart logo in white text on blue background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">10% Cashback</h3>
+                            <p class="text-sm text-gray-600">Max ₹300, above ₹1500</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51c5b8e3-f314-4ab5-86d1-e2583d52d22c.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">500</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 20 Jun 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 30%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">30% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 4 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="entertainment" data-price="400">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8a52a4e0-00fb-4e3d-b255-107a6bd1555a.png" alt="Netflix logo in white text on red background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">1 Month Free</h3>
+                            <p class="text-sm text-gray-600">For new Premium users</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/49ab908e-75a8-483d-93d9-5687ad923abf.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">400</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 15 May 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 80%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">80% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 5 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="ride" data-price="350">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dff1a8c7-aa64-422f-b195-8cb4e68ab971.png" alt="Ola logo in white text on blue background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">₹100 Off Prime</h3>
+                            <p class="text-sm text-gray-600">Airport rides only</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/354fd073-566a-4abd-9562-7049d24c5969.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">350</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 01 Jul 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 50%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">50% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 6 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="food" data-price="200">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1f964162-ee60-45af-a53a-bca18327e252.png" alt="Dunzo logo in white text on blue background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">Free Delivery</h3>
+                            <p class="text-sm text-gray-600">On all deliveries</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8a6b7bc6-a07c-4550-968b-77f2772e50d7.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">200</span>
+                            </div>
+                            <button class="mt-2 bg-gray-200 text-gray-500 text-xs px-3 py-1 rounded-full">Claimed</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 10 May 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 90%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">90% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 7 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="shopping" data-price="450">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5e5f56a9-9b39-4a83-aa1f-f412ace21d00.png" alt="Myntra logo in white text on orange background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">15% Off Fashion</h3>
+                            <p class="text-sm text-gray-600">Min purchase ₹2,000</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e7b4e0ab-3009-4cc5-a7be-1d6c21f94844.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">450</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 25 May 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">60% claimed</div>
+                    </div>
+                </div>
+
+                <!-- Voucher 8 -->
+                <div class="voucher-card bg-white rounded-xl overflow-hidden shadow-md" data-category="entertainment" data-price="550">
+                    <div class="p-4 flex justify-between">
+                        <div>
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b92e7d58-26d1-4137-9ce2-83a90c2cd053.png" alt="Spotify logo in white text on black background" class="voucher-logo mb-2">
+                            <h3 class="font-bold text-base sm:text-lg">3 Months Premium</h3>
+                            <p class="text-sm text-gray-600">For new subscribers</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="flex items-center mb-1">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e043e571-7e15-4cdc-ab5f-fbdb1a058b9b.png" alt="Coin icon" class="coin-icon mr-1">
+                                <span class="text-sm font-medium">550</span>
+                            </div>
+                            <button class="claim-btn mt-2 bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full hover:bg-indigo-200 transition">Claim</button>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <div class="text-xs text-gray-500">Valid till: 30 Jun 2024</div>
+                        <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-indigo-500 rounded-full" style="width: 70%"></div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">70% claimed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current coin balance
+        let coinBalance = 1250;
+        const coinBalanceElement = document.getElementById('coin-balance');
+        
+        // Category filter functionality
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const voucherCards = document.querySelectorAll('.voucher-card');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                categoryButtons.forEach(btn => btn.classList.remove('active', 'bg-indigo-100', 'text-indigo-700'));
+                button.classList.add('active', 'bg-indigo-100', 'text-indigo-700');
+                
+                // Filter vouchers
+                const category = button.dataset.category;
+                voucherCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Claim voucher function
+        function claimVoucher(element) {
+            // Don't allow claiming if already claimed
+            if (element.classList.contains('claimed')) {
+                showToast('You have already claimed this voucher!');
+                return;
+            }
+            
+            // Get the coin cost
+            const coinCost = parseInt(element.dataset.price);
+            
+            // Check if user has enough coins
+            if (coinBalance >= coinCost) {
+                // Deduct coins
+                coinBalance -= coinCost;
+                coinBalanceElement.textContent = coinBalance.toLocaleString();
+                
+                // Mark as claimed
+                element.classList.add('claimed');
+                
+                // Change button text
+                const button = element.querySelector('.claim-btn');
+                button.textContent = 'Claimed';
+                button.classList.remove('bg-indigo-100', 'text-indigo-700', 'hover:bg-indigo-200');
+                button.classList.add('bg-gray-200', 'text-gray-500');
+                
+                // Show success animation
+                element.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 100);
+                
+                showToast('Voucher claimed successfully!');
+            } else {
+                showToast('Not enough coins to claim this voucher!');
+            }
+        }
+        
+        // Handle featured voucher claim
+        const featuredVoucherBtn = document.querySelector('.featured-voucher .claim-btn');
+        featuredVoucherBtn.addEventListener('click', function() {
+            const featuredVoucher = document.querySelector('.featured-voucher');
+            const coinCost = 600;
+            
+            if (coinBalance >= coinCost) {
+                coinBalance -= coinCost;
+                coinBalanceElement.textContent = coinBalance.toLocaleString();
+                showToast('Featured voucher claimed successfully!');
+                
+                // Visual feedback
+                featuredVoucher.classList.add('claimed');
+                featuredVoucherBtn.textContent = 'Claimed';
+                featuredVoucherBtn.classList.remove('bg-white', 'text-indigo-700');
+                featuredVoucherBtn.classList.add('bg-indigo-200', 'text-indigo-800');
+            } else {
+                showToast('Not enough coins to claim the featured voucher!');
+            }
+        });
+        
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm animate-fade-in';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('animate-fade-out');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Add animate classes to head
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(10px); }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+            .animate-fade-out {
+                animation: fadeOut 0.3s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

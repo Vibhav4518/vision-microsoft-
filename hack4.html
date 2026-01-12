@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .form-input:focus + label,
+        .form-input:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) scale(0.9);
+            color: #3b82f6;
+        }
+        
+        textarea:focus + label,
+        textarea:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) scale(0.9);
+        }
+        
+        .success-message {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Get in <span class="text-blue-600">Touch</span>
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Have questions or need assistance? Our team is here to help you with any inquiries you might have.
+            </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto">
+            <!-- Contact Form -->
+            <div class="lg:w-1/2">
+                <form id="contactForm" class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="relative mb-8">
+                        <input type="text" id="name" placeholder=" " 
+                            class="form-input w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-all duration-200">
+                        <label for="name" class="absolute left-4 top-3 text-gray-500 transition-all duration-200 origin-top-left">Full Name</label>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <input type="email" id="email" placeholder=" " 
+                            class="form-input w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-all duration-200">
+                        <label for="email" class="absolute left-4 top-3 text-gray-500 transition-all duration-200 origin-top-left">Email Address</label>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <input type="text" id="subject" placeholder=" " 
+                            class="form-input w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-all duration-200">
+                        <label for="subject" class="absolute left-4 top-3 text-gray-500 transition-all duration-200 origin-top-left">Subject</label>
+                    </div>
+                    
+                    <div class="relative mb-8">
+                        <textarea id="message" rows="4" placeholder=" " 
+                            class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-blue-600 outline-none transition-all duration-200 resize-none"></textarea>
+                        <label for="message" class="absolute left-4 top-3 text-gray-500 transition-all duration-200 origin-top-left">Your Message</label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        Send Message
+                    </button>
+                    
+                    <div id="successMessage" class="success-message mt-4 text-center text-green-600">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Your message has been sent successfully!
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="lg:w-1/2 flex flex-col justify-center">
+                <div class="bg-white p-8 rounded-xl shadow-lg h-full">
+                    <div class="flex items-center mb-8">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aaac2d2b-f449-491a-a496-f380f1a3c199.png" alt="Modern office building exterior with glass facade and corporate branding" 
+                             class="w-16 h-16 object-cover rounded-lg mr-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Company Inc.</h2>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Our Location</h3>
+                                <p class="text-gray-600">456 Corporate Tower, Sector 62<br>Noida, Uttar Pradesh 201309</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Call Us</h3>
+                                <p class="text-gray-600">+91 98765 43210</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">Email Us</h3>
+                                <p class="text-gray-600">info@companyindia.in</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-gray-100 hover:bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-gray-700 hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fab fa-facebook-f text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-gray-100 hover:bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-gray-700 hover:text-blue-400 transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-gray-100 hover:bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-gray-700 hover:text-pink-600 transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-gray-100 hover:bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center text-gray-700 hover:text-blue-700 transition-all duration-300 transform hover:-translate-y-1">
+                                <i class="fab fa-linkedin-in text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-4 bg-blue-50 rounded-lg floating">
+                        <div class="flex items-center">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8580a734-0376-4780-87c3-8cb8d5d378e2.png" alt="Friendly customer service representative smiling with headset" 
+                                 class="w-12 h-12 object-cover rounded-full mr-3">
+                            <div>
+                                <p class="font-medium text-gray-800">Need immediate assistance?</p>
+                                <p class="text-sm text-gray-600">Our support team is available 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simple validation
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                if (!name || !email || !message) {
+                    // Shake animation for empty fields
+                    const inputs = form.querySelectorAll('input, textarea');
+                    inputs.forEach(input => {
+                        if (!input.value) {
+                            input.style.borderColor = 'red';
+                            input.classList.add('animate-shake');
+                            setTimeout(() => {
+                                input.style.borderColor = input === document.activeElement ? '#3b82f6' : '#d1d5db';
+                                input.classList.remove('animate-shake');
+                            }, 1000);
+                        }
+                    });
+                    return;
+                }
+                
+                // All fields are filled - simulate form submission
+                form.style.opacity = '0.8';
+                form.querySelector('button').disabled = true;
+                form.querySelector('button').innerHTML = '<div class="pulse">Sending...</div>';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    form.reset();
+                    form.style.opacity = '1';
+                    form.querySelector('button').disabled = false;
+                    form.querySelector('button').innerHTML = 'Send Message';
+                    
+                    successMessage.classList.add('show');
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                }, 2000);
+            });
+            
+            // Add floating label functionality
+            const inputs = document.querySelectorAll('.form-input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.style.borderColor = '#3b82f6';
+                });
+                
+                input.addEventListener('blur', () => {
+                    if (!input.value) {
+                        input.style.borderColor = '#d1d5db';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

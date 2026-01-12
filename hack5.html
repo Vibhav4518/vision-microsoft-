@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guide to the Indian Constitution</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .accordion-content {
+      display: none;
+      transition: all 0.3s ease;
+    }
+    .accordion.open .accordion-content {
+      display: block;
+    }
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 24px;
+      height: 100%;
+      width: 2px;
+      background: #e5e7eb;
+    }
+    .print-only {
+      display: none;
+    }
+    @media print {
+      .no-print {
+        display: none;
+      }
+      .print-only {
+        display: block;
+      }
+      body {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-2/3">
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-800">The Constitution of India</h1>
+          <p class="mt-4 text-gray-600 text-lg">
+            A comprehensive guide to understanding the world's longest written constitution
+          </p>
+          <p class="mt-2 text-gray-500">
+            Adopted: 26 November 1949 | Effective: 26 January 1950
+          </p>
+        </div>
+        <div class="md:w-1/3 mt-6 md:mt-0 flex justify-center">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6f2ab428-50ad-42b2-929a-63dfd80e9b74.png" alt="Illustration of the Indian Constitution document with national emblem, surrounded by abstract saffron, white and green colors representing the Indian flag" class="w-48 h-48 object-contain" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick Facts -->
+  <section class="bg-orange-50 py-8">
+    <div class="container mx-auto px-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Quick Facts</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-orange-600">Length</h3>
+          <p class="mt-2 text-gray-700">Longest written constitution of any sovereign country</p>
+          <p class="mt-2 font-medium">Originally: 395 articles, 8 schedules</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-orange-600">Drafting</h3>
+          <p class="mt-2 text-gray-700">Took 2 years, 11 months, 18 days</p>
+          <p class="mt-2 font-medium">Drafting Committee chaired by Dr. B.R. Ambedkar</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-orange-600">Sources</h3>
+          <p class="mt-2 text-gray-700">Drew from constitutions of over 60 countries</p>
+          <p class="mt-2 font-medium">Key influences: UK, US, Ireland, Canada</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-orange-600">Amendments</h3>
+          <p class="mt-2 text-gray-700">Amendable to meet changing needs</p>
+          <p class="mt-2 font-medium">105 amendments as of 2023</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Key Features of the Indian Constitution</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-orange-500">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Federal System with Unitary Bias</h3>
+          <p class="text-gray-600">Divides powers between Centre and States but gives more power to Centre during emergencies</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Union List (97 items)</li>
+            <li>State List (66 items)</li>
+            <li>Concurrent List (47 items)</li>
+          </ul>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-green-600">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Parliamentary System</h3>
+          <p class="text-gray-600">Modeled after British system with President as nominal head and PM as real executive</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Bicameral Parliament</li>
+            <li>Council of Ministers responsible to Lok Sabha</li>
+            <li>Collective responsibility</li>
+          </ul>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-blue-600">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Fundamental Rights</h3>
+          <p class="text-gray-600">Six categories of rights guaranteed to all citizens that are enforceable in courts</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Right to Equality (Articles 14-18)</li>
+            <li>Right to Freedom (Articles 19-22)</li>
+            <li>Right Against Exploitation (Articles 23-24)</li>
+          </ul>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-600">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Directive Principles</h3>
+          <p class="text-gray-600">Non-justiciable principles for policy making to establish social & economic democracy</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Welfare state provisions</li>
+            <li>Uniform Civil Code</li>
+            <li>Promotion of village panchayats</li>
+          </ul>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-red-600">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Independent Judiciary</h3>
+          <p class="text-gray-600">Integrated judicial system with Supreme Court at apex to protect constitution</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Judicial review power</li>
+            <li>Public Interest Litigation</li>
+            <li>Basic structure doctrine</li>
+          </ul>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-yellow-600">
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Secularism</h3>
+          <p class="text-gray-600">State has no official religion and treats all religions equally</p>
+          <ul class="mt-3 list-disc pl-5 space-y-1 text-gray-600">
+            <li>Freedom of religion</li>
+            <li>No religious instruction in state schools</li>
+            <li>State can regulate secular activities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fundamental Rights Section -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Fundamental Rights (Part III: Articles 12-35)</h2>
+      <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+        Fundamental Rights are essential human rights guaranteed to all citizens and enforceable by courts through writs under Article 32.
+      </p>
+      
+      <div class="max-w-4xl mx-auto space-y-4">
+        <!-- Right 1 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-orange-50 hover:bg-orange-100 transition flex justify-between items-center">
+            <span>Article 14-18: Right to Equality</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-orange-300">
+              <p class="mb-3">Ensures equality before law and equal protection of laws for all persons in India.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Article 14:</strong> Equality before law and equal protection of laws</li>
+                <li><strong>Article 15:</strong> Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth</li>
+                <li><strong>Article 16:</strong> Equality of opportunity in public employment</li>
+                <li><strong>Article 17:</strong> Abolition of untouchability</li>
+                <li><strong>Article 18:</strong> Abolition of titles except military and academic</li>
+              </ul>
+              <div class="mt-4 p-3 bg-orange-50 rounded">
+                <p class="text-sm font-medium">Important Case: <span class="font-normal">Indra Sawhney v. Union of India (1992) - Upheld 27% OBC reservations with 50% cap</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right 2 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-green-50 hover:bg-green-100 transition flex justify-between items-center">
+            <span>Article 19-22: Right to Freedom</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-green-300">
+              <p class="mb-3">Guarantees six fundamental freedoms to citizens with reasonable restrictions.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Article 19(1)(a):</strong> Freedom of speech and expression</li>
+                <li><strong>Article 19(1)(b):</strong> Freedom to assemble peaceably</li>
+                <li><strong>Article 19(1)(c):</strong> Freedom to form associations/unions</li>
+                <li><strong>Article 19(1)(d):</strong> Freedom to move freely throughout India</li>
+                <li><strong>Article 19(1)(e):</strong> Freedom to reside and settle anywhere</li>
+                <li><strong>Article 19(1)(g):</strong> Freedom to practice any profession</li>
+                <li><strong>Article 20:</strong> Protection in respect of conviction for offenses</li>
+                <li><strong>Article 21:</strong> Protection of life and personal liberty</li>
+                <li><strong>Article 21A:</strong> Right to education (added by 86th Amendment)</li>
+                <li><strong>Article 22:</strong> Protection against arrest and detention</li>
+              </ul>
+              <div class="mt-4 p-3 bg-green-50 rounded">
+                <p class="text-sm font-medium">Landmark Judgment: <span class="font-normal">Maneka Gandhi v. Union of India (1978) - Expanded Article 21</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right 3 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-blue-50 hover:bg-blue-100 transition flex justify-between items-center">
+            <span>Article 23-24: Right Against Exploitation</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-blue-300">
+              <p class="mb-3">Prohibits human trafficking, forced labor, and child labor in hazardous conditions.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Article 23:</strong> Prohibits trafficking, forced labor, and begar</li>
+                <li><strong>Article 24:</strong> Prohibits employment of children below 14 in hazardous jobs</li>
+              </ul>
+              <div class="mt-4 p-3 bg-blue-50 rounded">
+                <p class="text-sm font-medium">Implementation: <span class="font-normal">Child Labour (Prohibition & Regulation) Act, 1986 (amended in 2016)</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right 4 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-purple-50 hover:bg-purple-100 transition flex justify-between items-center">
+            <span>Article 25-28: Right to Freedom of Religion</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-purple-300">
+              <p class="mb-3">Guarantees freedom of conscience and free profession, practice and propagation of religion.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Article 25:</strong> Freedom of conscience and religion</li>
+                <li><strong>Article 26:</strong> Freedom to manage religious affairs</li>
+                <li><strong>Article 27:</strong> No compulsion to pay taxes for religious purposes</li>
+                <li><strong>Article 28:</strong> No religious instruction in state-funded schools</li>
+              </ul>
+              <div class="mt-4 p-3 bg-purple-50 rounded">
+                <p class="text-sm font-medium">Notable Case: <span class="font-normal">Shirur Mutt Case (1954) - Defined 'matters of religion'</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right 5 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-red-50 hover:bg-red-100 transition flex justify-between items-center">
+            <span>Article 29-30: Cultural and Educational Rights</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-red-300">
+              <p class="mb-3">Protects the interests of minorities to conserve their culture and establish educational institutions.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Article 29:</strong> Right to conserve distinct language, script or culture</li>
+                <li><strong>Article 30:</strong> Right of minorities to establish/administer educational institutions</li>
+              </ul>
+              <div class="mt-4 p-3 bg-red-50 rounded">
+                <p class="text-sm font-medium">Significance: <span class="font-normal">Important for preserving India's cultural diversity</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right 6 -->
+        <div class="accordion bg-white rounded-lg shadow-sm overflow-hidden">
+          <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-800 bg-yellow-50 hover:bg-yellow-100 transition flex justify-between items-center">
+            <span>Article 32: Right to Constitutional Remedies</span>
+            <svg class="w-5 h-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="accordion-content px-6 pb-4 text-gray-700">
+            <div class="pl-4 border-l-2 border-yellow-300">
+              <p class="mb-3">Provides the right to move to the Supreme Court for enforcement of Fundamental Rights.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>Called "heart and soul" of the Constitution by Dr. Ambedkar</li>
+                <li>Writs available: Habeas Corpus, Mandamus, Prohibition, Certiorari, Quo Warranto</li>
+                <li>Article 32 cannot be suspended except during emergency under Article 359</li>
+              </ul>
+              <div class="mt-4 p-3 bg-yellow-50 rounded">
+                <p class="text-sm font-medium">Example: <span class="font-normal">Used in PIL cases for protecting rights of the disadvantaged</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Directive Principles -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Directive Principles of State Policy (Part IV: Articles 36-51)</h2>
+      <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+        These are guidelines for the government to establish social and economic democracy, though not enforceable in court.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Group 1 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Social Principles</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-orange-500">•</div>
+              <p class="ml-2 text-gray-700">Equal justice and free legal aid (Article 39A)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-orange-500">•</div>
+              <p class="ml-2 text-gray-700">Living wage for workers (Article 43)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-orange-500">•</div>
+              <p class="ml-2 text-gray-700">Uniform civil code (Article 44)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-orange-500">•</div>
+              <p class="ml-2 text-gray-700">Prohibition of intoxicating drinks (Article 47)</p>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Group 2 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Gandhian Principles</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-green-600">•</div>
+              <p class="ml-2 text-gray-700">Village panchayats (Article 40)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-green-600">•</div>
+              <p class="ml-2 text-gray-700">Cottage industries (Article 43)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-green-600">•</div>
+              <p class="ml-2 text-gray-700">Prohibition of cow slaughter (Article 48)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-green-600">•</div>
+              <p class="ml-2 text-gray-700">Promotion of handicrafts (Article 43)</p>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Group 3 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">International Principles</h3>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-blue-600">•</div>
+              <p class="ml-2 text-gray-700">Secure international peace (Article 51)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-blue-600">•</div>
+              <p class="ml-2 text-gray-700">Respect for international law (Article 51)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-blue-600">•</div>
+              <p class="ml-2 text-gray-700">Promotion of justice to other nations (Article 51)</p>
+            </li>
+            <li class="flex items-start">
+              <div class="flex-shrink-0 h-6 w-6 text-blue-600">•</div>
+              <p class="ml-2 text-gray-700">Maintain honorable relations among nations (Article 51)</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-8 max-w-3xl mx-auto p-6 bg-indigo-50 rounded-lg">
+        <h3 class="text-xl font-semibold text-indigo-800 mb-3">Implementation Status</h3>
+        <ul class="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Mid-day meal scheme - For child nutrition (Article 47)</li>
+          <li>MGNREGA - Right to work (Article 41)</li>
+          <li>Right to Education Act (Article 45)</li>
+          <li>Various labor welfare laws (Article 43)</li>
+          <li>Gram Panchayats through 73rd Amendment (Article 40)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amendments -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Amendment Process</h2>
+      <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+        The Constitution provides for its amendment to meet changing needs while ensuring stability (Article 368)
+      </p>
+      
+      <div class="max-w-4xl mx-auto">
+        <!-- Timeline -->
+        <div class="relative">
+          <!-- Phase 1 -->
+          <div class="timeline-item relative pl-8 pb-8">
+            <div class="absolute left-0 w-4 h-4 bg-orange-500 rounded-full mt-1"></div>
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Initiation</h3>
+              <p class="text-gray-600">Amendment can be initiated only in Parliament (either House)</p>
+              <p class="text-gray-600 mt-2">Requires introduction as a bill</p>
+            </div>
+          </div>
+          
+          <!-- Phase 2 -->
+          <div class="timeline-item relative pl-8 pb-8">
+            <div class="absolute left-0 w-4 h-4 bg-blue-500 rounded-full mt-1"></div>
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Passage</h3>
+              <p class="text-gray-600">Must be passed by:</p>
+              <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                <li>Special majority: 2/3rd of members present and voting + majority of total membership</li>
+                <li>Some amendments require ratification by 50% state legislatures</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Phase 3 -->
+          <div class="timeline-item relative pl-8">
+            <div class="absolute left-0 w-4 h-4 bg-green-500 rounded-full mt-1"></div>
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">Assent</h3>
+              <p class="text-gray-600">After passage, presented to President for assent (no veto power)</p>
+              <p class="text-gray-600 mt-2">Comes into force on specified date</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Important Amendments -->
+        <div class="mt-12">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Important Amendments</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Amendment 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-orange-100 text-orange-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">1st</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1951 - First Amendment</h4>
+                  <p class="text-gray-600 text-sm">Added reasonable restrictions on FR, inserted Ninth Schedule for land reforms</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Amendment 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-blue-100 text-blue-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">7th</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1956 - Reorganization of States</h4>
+                  <p class="text-gray-600 text-sm">Reorganized states on linguistic basis, abolished A,B,C,D states classification</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Amendment 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-green-100 text-green-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">24th</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1971 - Parliament's Power</h4>
+                  <p class="text-gray-600 text-sm">Affirmed Parliament's power to amend any part of Constitution including FR</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Amendment 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-purple-100 text-purple-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">42nd</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1976 - Mini Constitution</h4>
+                  <p class="text-gray-600 text-sm">Added 10 new DPSP, made 'secular' and 'socialist' in preamble, emergency provisions extended</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Amendment 5 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-red-100 text-red-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">44th</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1978 - Emergency Safeguards</h4>
+                  <p class="text-gray-600 text-sm">Made emergency declaration subject to judicial review, deleted Fundamental Right to property</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Amendment 6 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+              <div class="flex items-start">
+                <div class="bg-yellow-100 text-yellow-800 font-bold rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">73rd</div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">1992 - Panchayati Raj</h4>
+                  <p class="text-gray-600 text-sm">Constitutional recognition to Panchayats (Article 243) with regular elections</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Basic Structure Doctrine -->
+        <div class="mt-12 bg-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Basic Structure Doctrine</h3>
+          <p class="text-gray-700 mb-4">Established by Supreme Court in Kesavananda Bharati case (1973) which held that Parliament cannot alter the 'basic structure' of the Constitution.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Identified Elements of Basic Structure:</h4>
+              <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                <li>Supremacy of Constitution</li>
+                <li>Republican & democratic form of government</li>
+                <li>Secular character</li>
+                <li>Separation of powers</li>
+                <li>Federal character</li>
+                <li>Rule of law</li>
+                <li>Judicial review</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Judicial Safeguard:</h4>
+              <p class="text-gray-600">Courts have struck down constitutional amendments violating basic structure in:</p>
+              <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                <li>Minerva Mills case (1980)</li>
+                <li>Coelho case (2007)</li>
+                <li>NJAC case (2015)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Quiz -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Test Your Knowledge</h2>
+      
+      <div class="max-w-2xl mx-auto bg-gray-50 p-8 rounded-lg">
+        <div id="quiz-container">
+          <h3 class="text-xl font-semibold text-gray-800 mb-6">Constitution Quiz (5 Questions)</h3>
+          
+          <!-- Q1 -->
+          <div class="mb-8">
+            <p class="text-gray-800 font-medium mb-3">1. Who is considered the chief architect of the Indian Constitution?</p>
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <input type="radio" id="q1a" name="q1" class="h-4 w-4 text-orange-600" value="a">
+                <label for="q1a" class="ml-2 text-gray-700">Jawaharlal Nehru</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q1b" name="q1" class="h-4 w-4 text-orange-600" value="b">
+                <label for="q1b" class="ml-2 text-gray-700">B.R. Ambedkar</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q1c" name="q1" class="h-4 w-4 text-orange-600" value="c">
+                <label for="q1c" class="ml-2 text-gray-700">Mahatma Gandhi</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q1d" name="q1" class="h-4 w-4 text-orange-600" value="d">
+                <label for="q1d" class="ml-2 text-gray-700">Rajendra Prasad</label>
+              </div>
+            </div>
+            <p class="mt-2 text-sm text-gray-500 hidden answer" data-correct="b">Correct Answer: B.R. Ambedkar - Chairman of Drafting Committee</p>
+          </div>
+          
+          <!-- Q2 -->
+          <div class="mb-8">
+            <p class="text-gray-800 font-medium mb-3">2. Which part of the Constitution contains Fundamental Rights?</p>
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <input type="radio" id="q2a" name="q2" class="h-4 w-4 text-orange-600" value="a">
+                <label for="q2a" class="ml-2 text-gray-700">Part II</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q2b" name="q2" class="h-4 w-4 text-orange-600" value="b">
+                <label for="q2b" class="ml-2 text-gray-700">Part III</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q2c" name="q2" class="h-4 w-4 text-orange-600" value="c">
+                <label for="q2c" class="ml-2 text-gray-700">Part IV</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q2d" name="q2" class="h-4 w-4 text-orange-600" value="d">
+                <label for="q2d" class="ml-2 text-gray-700">Part V</label>
+              </div>
+            </div>
+            <p class="mt-2 text-sm text-gray-500 hidden answer" data-correct="b">Correct Answer: Part III (Articles 12-35)</p>
+          </div>
+          
+          <!-- Q3 -->
+          <div class="mb-8">
+            <p class="text-gray-800 font-medium mb-3">3. Which article is called the "heart and soul" of the Constitution?</p>
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <input type="radio" id="q3a" name="q3" class="h-4 w-4 text-orange-600" value="a">
+                <label for="q3a" class="ml-2 text-gray-700">Article 14</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q3b" name="q3" class="h-4 w-4 text-orange-600" value="b">
+                <label for="q3b" class="ml-2 text-gray-700">Article 21</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q3c" name="q3" class="h-4 w-4 text-orange-600" value="c">
+                <label for="q3c" class="ml-2 text-gray-700">Article 25</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="q3d" name="q3" class="h-4 w-4 text-orange-600" value="d">
+                <label for="q3d" class="ml-2 text-gray-700">Article 32</label>
+              </div>
+            </div>
+            <p class="mt-2 text-sm text-gray-500 hidden answer" data-correct="d">Correct Answer: Article 32 (Right to Constitutional Remedies)</p>
+          </div>
+          
+          <!-- Results -->
+          <div class="flex justify-between items-center mt-10">
+            <button id="check-answers" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded transition">
+              Check Answers
+            </button>
+            <button id="try-again" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded transition hidden">
+              Try Again
+            </button>
+            <div id="score" class="font-medium text-gray-700 hidden">
+              Score: <span id="score-value">0</span>/5
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">About This Guide</h3>
+          <p class="text-sm">This educational resource provides an overview of the Indian Constitution's key aspects in simplified terms. Information is compiled from authentic sources.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">References</h3>
+          <ul class="text-sm space-y-2">
+            <li>Constitution of India (Bare Act)</li>
+            <li>Government of India publications</li>
+            <li>Supreme Court judgments</li>
+            <li>NCERT textbooks</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Note</h3>
+          <p class="text-sm">This is an educational resource only. For legal matters, always consult primary documents and legal professionals.</p>
+          <p class="text-xs mt-3">Last Updated: July 2023</p>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-6 text-sm text-center text-gray-400">
+        <p>© 2023 Indian Constitution Guide | Educational Resource</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion functionality
+    document.querySelectorAll('.accordion-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const accordion = button.closest('.accordion');
+        const content = accordion.querySelector('.accordion-content');
+        const isOpen = accordion.classList.contains('open');
+        
+        // Close all other accordions first
+        document.querySelectorAll('.accordion').forEach(acc => {
+          if (acc !== accordion) {
+            acc.classList.remove('open');
+            acc.querySelector('svg').style.transform = 'rotate(0deg)';
+          }
+        });
+        
+        // Toggle current accordion
+        accordion.classList.toggle('open');
+        button.querySelector('svg').style.transform = isOpen ? 
+          'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+    
+    // Quiz functionality
+    document.getElementById('check-answers').addEventListener('click', () => {
+      // Correct answers
+      const answers = {
+        q1: 'b',
+        q2: 'b', 
+        q3: 'd'
+      };
+      
+      let score = 0;
+      let answeredAll = true;
+      
+      // Check each question
+      Object.keys(answers).forEach(question => {
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        const correctOption = answers[question];
+        
+        if (!selected) {
+          answeredAll = false;
+          return;
+        }
+        
+        // Show correct/incorrect feedback
+        const allOptions = document.querySelectorAll(`input[name="${question}"]`);
+        allOptions.forEach(option => {
+          const label = option.nextElementSibling;
+          if (option.value === correctOption) {
+            label.style.color = 'green';
+            label.style.fontWeight = 'bold'; 
+          } else if (option.checked && option.value !== correctOption) {
+            label.style.color = 'red';
+          }
+        });
+        
+        if (selected.value === correctOption) {
+          score++;
+        }
+      });
+      
+      if (!answeredAll) {
+        alert('Please answer all questions before checking!');
+        return;
+      }
+      
+      // Show score and reset UI
+      document.getElementById('score-value').textContent = score;
+      document.getElementById('score').classList.remove('hidden');
+      document.getElementById('try-again').classList.remove('hidden');
+      document.getElementById('check-answers').classList.add('hidden');
+    });
+    
+    // Try again button
+    document.getElementById('try-again').addEventListener('click', () => {
+      // Reset all selections 
+      document.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.checked = false;
+        const label = input.nextElementSibling;
+        label.style.color = '';
+        label.style.fontWeight = '';
+      });
+      
+      // Hide answers
+      document.querySelectorAll('.answer').forEach(answer => {
+        answer.classList.add('hidden');
+      });
+      
+      // Reset UI
+      document.getElementById('score').classList.add('hidden');
+      document.getElementById('try-again').classList.add('hidden');
+      document.getElementById('check-answers').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
+

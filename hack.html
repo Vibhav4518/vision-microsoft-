@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution Puzzle Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .hindi-font {
+            font-family: 'Tiro Devanagari Hindi', serif;
+        }
+        
+        .tile {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .coin-animation {
+            animation: coinPop 0.8s ease-out forwards;
+        }
+        
+        @keyframes coinPop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <div class="flex justify-center mb-4">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8567e81c-b877-4f90-ab49-210d40eea93d.png" alt="Indian Constitution book cover with tricolor theme and national emblem" class="rounded-lg shadow-md h-20" />
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-2">Constitution Puzzle Challenge</h1>
+            <p class="text-gray-600">Unscramble words to reveal facts about India's Constitution and earn coins!</p>
+            
+            <!-- User Stats -->
+            <div class="mt-6 flex justify-center items-center space-x-6">
+                <div class="bg-white rounded-full p-3 shadow-md flex items-center">
+                    <div class="bg-yellow-400 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-700" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <span id="coinCount" class="font-bold text-gray-700">0</span>
+                </div>
+                
+                <div class="bg-white rounded-full p-3 shadow-md">
+                    <span class="font-bold text-gray-700">Level: <span id="levelCount">1</span>/10</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Area -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <!-- Level Progress -->
+            <div class="mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium text-indigo-700">Progress</span>
+                    <span id="progressText" class="text-sm font-medium text-indigo-700">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progressBar" class="bg-indigo-600 h-2.5 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Question Area -->
+            <div class="mb-8">
+                <p id="question" class="text-lg font-medium text-gray-700 mb-4">Which article of the Indian Constitution deals with the Right to Equality?</p>
+                <div id="hintContainer" class="hidden bg-blue-50 p-3 rounded-lg mb-4">
+                    <p class="text-blue-700 italic text-sm" id="hintText"></p>
+                </div>
+            </div>
+
+            <!-- Tiles Container -->
+            <div id="tilesContainer" class="flex flex-wrap gap-2 mb-6 justify-center">
+                <!-- Tiles will be dynamically added here -->
+            </div>
+
+            <!-- Answer Area -->
+            <div id="answerContainer" class="flex flex-wrap gap-2 min-h-12 p-3 bg-gray-100 rounded-lg mb-6">
+                <!-- User-selected tiles will appear here -->
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <button id="hintButton" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-lg font-medium transition">
+                    Get Hint
+                </button>
+                <button id="shuffleButton" class="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-4 py-2 rounded-lg font-medium transition">
+                    Shuffle Letters
+                </button>
+                <button id="checkButton" class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-lg font-medium transition">
+                    Check Answer
+                </button>
+                <button id="nextButton" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                    Next Level
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-indigo-800 mb-4">Did You Know?</h2>
+            <div id="factContainer" class="text-gray-700 mb-4">
+                <p>The Indian Constitution is the longest written constitution of any sovereign country in the world.</p>
+            </div>
+            <div class="flex justify-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0e2f73b6-cd52-422e-9612-0a7fd9d8011d.png" alt="Historical image of Constitution of India signing ceremony in 1950" class="rounded-lg shadow-sm" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-sm mx-4 text-center transform transition-all duration-300 scale-95 opacity-0">
+            <div class="relative mb-4">
+                <div class="w-20 h-20 bg-yellow-400 rounded-full mx-auto flex items-center justify-center shadow-lg coin-animation mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-700" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="absolute -right-2 -top-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm shadow-lg">+5</div>
+            </div>
+            <h3 class="text-2xl font-bold text-indigo-800 mb-2">Level Complete!</h3>
+            <p class="text-gray-600 mb-4">You've earned <span class="font-bold text-yellow-600">5 coins</span> for solving this constitutional puzzle!</p>
+            <p id="successMessage" class="text-gray-700 mb-6"></p>
+            <button id="modalNextButton" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition">
+                Continue to Next Level
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game Data - Indian Constitution themed puzzles
+        const gameData = [
+            {
+                question: "Which article of the Indian Constitution deals with the Right to Equality?",
+                answer: "Article 14",
+                hint: "This article is part of the Fundamental Rights and states that 'The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India.'",
+                fact: "Article 14-18 of the Indian Constitution collectively guarantee the Right to Equality, which is one of the six fundamental rights."
+            },
+            {
+                question: "Who is known as the Chief Architect of the Indian Constitution?",
+                answer: "Dr. B.R. Ambedkar",
+                hint: "He was the Chairman of the Drafting Committee of the Constituent Assembly and later became India's first Law Minister.",
+                fact: "Dr. B.R. Ambedkar is often called the 'Father of the Indian Constitution'. The original Constitution was handwritten in both English and Hindi."
+            },
+            {
+                question: "Which schedule of the Indian Constitution lists the languages recognized by the Constitution?",
+                answer: "Eighth Schedule",
+                hint: "Originally, there were 14 languages in this schedule. Currently, it includes 22 languages.",
+                fact: "The Eighth Schedule was added by the Constitution (21st Amendment) Act, 1967. The 22nd language added was Bodo in 2003."
+            },
+            {
+                question: "What is the term used for the introductory part of the Indian Constitution?",
+                answer: "Preamble",
+                hint: "It begins with the words 'We, the people of India' and declares India to be a Sovereign, Socialist, Secular, Democratic Republic.",
+                fact: "The words 'Socialist' and 'Secular' were added to the Preamble by the 42nd Amendment in 1976."
+            },
+            {
+                question: "Which article of the Indian Constitution deals with the Fundamental Right to Freedom of Speech and Expression?",
+                answer: "Article 19",
+                hint: "This article provides six freedoms to citizens, including freedom of speech, assembly, movement, etc., with reasonable restrictions.",
+                fact: "Article 19 originally had seven freedoms. The 'right to property' was removed by the 44th Amendment Act of 1978."
+            },
+            {
+                question: "What is the minimum age required to become the President of India?",
+                answer: "35 years",
+                hint: "The same age requirement applies to the Vice-President and Governors of States.",
+                fact: "The President of India is elected not directly by the people, but by members of the Electoral College consisting of elected members of both Houses of Parliament and elected members of the Legislative Assemblies of States."
+            },
+            {
+                question: "Which amendment of the Indian Constitution lowered the voting age from 21 to 18 years?",
+                answer: "61st Amendment",
+                hint: "This amendment was passed in 1988 during Rajiv Gandhi's government.",
+                fact: "The 61st Amendment Act, 1988 is also known as the Constitution (Sixty-first Amendment) Act, 1988."
+            },
+            {
+                question: "Which article provides for the establishment of a Supreme Court of India?",
+                answer: "Article 124",
+                hint: "This article comes under Part V (The Union) and Chapter IV (The Union Judiciary) of the Constitution.",
+                fact: "The Supreme Court of India came into existence on January 28, 1950, two days after India became a Republic."
+            },
+            {
+                question: "What is the total number of Fundamental Duties mentioned in the Indian Constitution?",
+                answer: "11",
+                hint: "These were added by the 42nd Amendment in 1976 (originally 10) and one more was added by the 86th Amendment in 2002.",
+                fact: "The Fundamental Duties were inspired by the Constitution of the erstwhile USSR. The 11th duty relates to providing opportunities for education to children aged 6-14 years."
+            },
+            {
+                question: "Which is the only Union Territory that has a High Court of its own?",
+                answer: "Delhi",
+                hint: "This Union Territory is also the National Capital Territory and has a special status under Article 239AA.",
+                fact: "Delhi High Court was established on 31 October 1966. It has jurisdiction over the National Capital Territory of Delhi."
+            }
+        ];
+
+        // Game State
+        let currentLevel = 0;
+        let coins = 0;
+        let puzzleTiles = [];
+        let answerTiles = [];
+        let selectedTiles = [];
+
+        // DOM Elements
+        const questionEl = document.getElementById('question');
+        const hintTextEl = document.getElementById('hintText');
+        const hintContainerEl = document.getElementById('hintContainer');
+        const hintButton = document.getElementById('hintButton');
+        const shuffleButton = document.getElementById('shuffleButton');
+        const checkButton = document.getElementById('checkButton');
+        const nextButton = document.getElementById('nextButton');
+        const modalNextButton = document.getElementById('modalNextButton');
+        const tilesContainerEl = document.getElementById('tilesContainer');
+        const answerContainerEl = document.getElementById('answerContainer');
+        const coinCountEl = document.getElementById('coinCount');
+        const levelCountEl = document.getElementById('levelCount');
+        const progressBarEl = document.getElementById('progressBar');
+        const progressTextEl = document.getElementById('progressText');
+        const successModalEl = document.getElementById('successModal');
+        const modalContentEl = document.querySelector('#successModal > div');
+        const successMessageEl = document.getElementById('successMessage');
+        const factContainerEl = document.getElementById('factContainer');
+
+        // Initialize Game
+        function initGame() {
+            displayLevel();
+            updateStats();
+            createTiles();
+            addEventListeners();
+        }
+
+        // Display current level
+        function displayLevel() {
+            if (currentLevel >= gameData.length) {
+                // Game completed
+                questionEl.textContent = "Congratulations! You've completed all levels!";
+                tilesContainerEl.innerHTML = '<p class="text-center text-gray-600 w-full">Refresh the page to play again.</p>';
+                answerContainerEl.innerHTML = '';
+                hideControls();
+                return;
+            }
+
+            const levelData = gameData[currentLevel];
+            questionEl.textContent = levelData.question;
+            hintTextEl.textContent = levelData.hint;
+            factContainerEl.innerHTML = `<p>${levelData.fact}</p>`;
+            hintContainerEl.classList.add('hidden');
+            nextButton.classList.add('hidden');
+        }
+
+        // Create tiles for current puzzle
+        function createTiles() {
+            tilesContainerEl.innerHTML = '';
+            answerContainerEl.innerHTML = '';
+
+            const answer = gameData[currentLevel].answer;
+            let letters = answer.split('').filter(char => char.trim().length > 0);
+
+            // Shuffle letters
+            for (let i = letters.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [letters[i], letters[j]] = [letters[j], letters[i]];
+            }
+
+            // Create puzzle tiles
+            letters.forEach((letter) => {
+                if(letter.trim().length > 0) {  // Only create tiles for non-space characters
+                    const tile = document.createElement('div');
+                    tile.className = 'tile bg-white rounded-lg text-gray-800 text-xl font-medium w-12 h-12 flex items-center justify-center cursor-pointer select-none shadow hover:bg-indigo-50 border border-gray-200';
+                    tile.textContent = letter;
+                    tile.dataset.index = puzzleTiles.length;
+                    tilesContainerEl.appendChild(tile);
+                    puzzleTiles.push(tile);
+                }
+            });
+        }
+
+        // Shuffle tiles
+        function shuffleTiles() {
+            const container = tilesContainerEl;
+            const tiles = Array.from(container.children);
+            
+            tiles.forEach(tile => {
+                container.removeChild(tile);
+            });
+
+            for (let i = tiles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                container.appendChild(tiles.splice(j, 1)[0]);
+            }
+            
+            // Append remaining tile (if any)
+            if (tiles.length > 0) {
+                container.appendChild(tiles[0]);
+            }
+        }
+
+        // Check answer
+        function checkAnswer() {
+            const userAnswer = Array.from(answerContainerEl.children)
+                .map(tile => tile.textContent)
+                .join('')
+                .trim();
+            
+            if (userAnswer === gameData[currentLevel].answer) {
+                // Correct answer
+                coins += 5;
+                showSuccessModal();
+                currentLevel++;
+                updateStats();
+                
+                if (currentLevel < gameData.length) {
+                    nextButton.classList.remove('hidden');
+                } else {
+                    setTimeout(() => {
+                        displayLevel(); // Show completion message
+                    }, 2000);
+                }
+            } else {
+                // Incorrect answer
+                alert("That's not correct. Try again!");
+                resetTiles();
+            }
+        }
+
+        // Show success modal
+        function showSuccessModal() {
+            const factIdx = Math.min(currentLevel, gameData.length - 1);
+            const successMessage = gameData[factIdx] ? gameData[factIdx].fact : "Great job! You've learned something new about the Indian Constitution!";
+            successMessageEl.textContent = successMessage;
+            
+            // Reset animation
+            const coin = document.querySelector('.coin-animation');
+            coin.style.animation = 'none';
+            void coin.offsetWidth; // Trigger reflow
+            coin.style.animation = 'coinPop 0.8s ease-out forwards';
+            
+            successModalEl.classList.remove('hidden');
+            setTimeout(() => {
+                modalContentEl.classList.remove('scale-95', 'opacity-0');
+                modalContentEl.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Hide success modal
+        function hideSuccessModal() {
+            modalContentEl.classList.remove('scale-100', 'opacity-100');
+            modalContentEl.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                successModalEl.classList.add('hidden');
+            }, 300);
+        }
+
+        // Go to next level
+        function nextLevel() {
+            hideSuccessModal();
+            puzzleTiles = [];
+            answerTiles = [];
+            selectedTiles = [];
+            displayLevel();
+            createTiles();
+        }
+
+        // Reset tiles to initial state
+        function resetTiles() {
+            answerTiles.forEach(tile => {
+                tilesContainerEl.appendChild(tile);
+                tile.classList.remove('bg-green-100');
+                tile.onclick = () => selectTile(tile);
+            });
+            
+            answerTiles = [];
+            answerContainerEl.innerHTML = '';
+        }
+
+        // Select tile to add to answer
+        function selectTile(tile) {
+            if (selectedTiles.includes(tile) || answerContainerEl.contains(tile)) return;
+            
+            selectedTiles.push(tile);
+            answerContainerEl.appendChild(tile);
+            answerTiles.push(tile);
+            tile.onclick = () => deselectTile(tile);
+            
+            // Remove from puzzle tiles array
+            const index = puzzleTiles.indexOf(tile);
+            if (index > -1) {
+                puzzleTiles.splice(index, 1);
+            }
+        }
+
+        // Deselect tile to return to puzzle
+        function deselectTile(tile) {
+            const index = selectedTiles.indexOf(tile);
+            if (index > -1) {
+                selectedTiles.splice(index, 1);
+            }
+            
+            const answerIndex = answerTiles.indexOf(tile);
+            if (answerIndex > -1) {
+                answerTiles.splice(answerIndex, 1);
+            }
+            
+            tilesContainerEl.appendChild(tile);
+            puzzleTiles.push(tile);
+            tile.onclick = () => selectTile(tile);
+        }
+
+        // Update game stats
+        function updateStats() {
+            coinCountEl.textContent = coins;
+            levelCountEl.textContent = currentLevel + 1;
+            
+            const progress = currentLevel >= gameData.length ? 100 : ((currentLevel) / gameData.length) * 100;
+            progressBarEl.style.width = `${progress}%`;
+            progressTextEl.textContent = `${Math.round(progress)}%`;
+        }
+
+        // Hide control buttons when game is over
+        function hideControls() {
+            hintButton.classList.add('hidden');
+            shuffleButton.classList.add('hidden');
+            checkButton.classList.add('hidden');
+            nextButton.classList.add('hidden');
+        }
+
+        // Add event listeners
+        function addEventListeners() {
+            hintButton.addEventListener('click', () => {
+                hintContainerEl.classList.remove('hidden');
+            });
+            
+            shuffleButton.addEventListener('click', shuffleTiles);
+            
+            checkButton.addEventListener('click', checkAnswer);
+            
+            nextButton.addEventListener('click', nextLevel);
+            
+            modalNextButton.addEventListener('click', nextLevel);
+            
+            // Add click handler for puzzle tiles
+            document.addEventListener('click', (e) => {
+                if (e.target === successModalEl) {
+                    hideSuccessModal();
+                }
+            });
+
+            // Initialize tile click handlers after DOM is ready
+            setTimeout(() => {
+                puzzleTiles.forEach(tile => {
+                    tile.onclick = () => selectTile(tile);
+                });
+            }, 0);
+        }
+
+        // Start the game
+        initGame();
+    </script>
+</body>
+</html>
